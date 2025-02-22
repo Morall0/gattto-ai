@@ -20,11 +20,11 @@ public class Tablero {
     }
 
     public boolean colocarFicha(int columna, int fila, char ficha) {
-        if(columna < 0 || columna >= size || fila < 0 || fila >= size) {
+        if(columna < 0 || columna >= size || fila < 0 || fila >= size) { //Valida que este dentro del tamaño del tablero
             return false;
         }
 
-        if (tablero[fila][columna] == ' ') {
+        if (tablero[fila][columna] == ' ') { //Si hay espacio para colocar
             tablero[fila][columna] = ficha;
             return true;
         }
@@ -103,8 +103,4 @@ public class Tablero {
     public char[][] getTablero() {
         return tablero;
     }
-
-    
-    
-
 }
