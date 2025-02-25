@@ -24,7 +24,7 @@ public class Juego {
             boolean casilla_valida;
 
             if (jugadores[turno] instanceof Agente) { //Si es agente se tira con base en sus algoritmos
-                ((Agente) jugadores[turno]).jugar(tablero);
+                ((Agente) jugadores[turno]).jugar(tablero, turno);
             } else { //Si es usuario se le pide la casilla
                 do {
                     System.out.print("\nTirar en (fila,columna): ");
