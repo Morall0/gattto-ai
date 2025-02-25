@@ -73,6 +73,8 @@ public class Agente extends Jugador {
             }
         }
 
+        //System.out.println("Valor: "+ mejorJugada);
+
         tablero.colocarFicha(mejorColumna, mejorFila, ficha);
 
 
