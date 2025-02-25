@@ -32,13 +32,18 @@ public class Tablero {
     }
 
     public void mostrarTablero() {
-        System.out.println("-------------");
+        String separador = "-";
+        for (int i = 0; i < size; i++) {
+            separador += "----";
+        }
+        System.out.println(separador);
+
         for (int i = 0; i < size; i++) {
             System.out.print("| ");
             for (int j = 0; j < size; j++) {
                 System.out.print(tablero[i][j] + " | ");
             }
-            System.out.println("\n-------------");
+            System.out.println("\n" + separador);
         }
     }
 
