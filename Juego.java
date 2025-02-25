@@ -22,13 +22,13 @@ public class Juego {
 
         if (tablero.hayGanador(jugadores[0].getFicha())) {
             System.out.println("Gana el jugador 1");
-            return 0; // Agente wins
+            return 0; // Agente 
         } else if (tablero.hayGanador(jugadores[1].getFicha())) {
             System.out.println("Gana el jugador 2");
-            return 1; // Jugador wins
+            return 1; // Jugador 
         } else {
             System.out.println("Empate");
-            return -1; // Draw
+            return -1; 
         }
     }
 

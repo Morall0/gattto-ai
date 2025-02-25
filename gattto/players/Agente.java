@@ -55,12 +55,12 @@ public class Agente extends Jugador {
             }
         }
 
-        tablero.colocarFicha(mejorFila, mejorColumna, ficha);
+        tablero.colocarFicha(mejorColumna, mejorFila, ficha);
         System.out.println("Agente juega en (" + mejorFila + ", " + mejorColumna + ")");
     }
 
     private int minimax(char[][] board, int profundidad, boolean esMax, int size, int alpha, int beta) {
-        // Condiciones terminales: victoria, derrota o empate
+        // Victoria, derrota o empate
         if (hayGanador(board, ficha, size)) {
             return 10 - profundidad;
         }
@@ -71,7 +71,8 @@ public class Agente extends Jugador {
             return 0;
         }
 
-        // Crear una clave única para el estado actual (incluye quién juega y la profundidad)
+        //Checar si ya se calculó el valor de la posición
+    
         String key = boardToString(board) + "_" + (esMax ? "max" : "min") + "_" + profundidad;
         if (cache.containsKey(key)) {
             return cache.get(key);
@@ -89,7 +90,7 @@ public class Agente extends Jugador {
                         mejorValor = Math.max(mejorValor, valor);
                         alpha = Math.max(alpha, mejorValor);
                         if (beta <= alpha) {
-                            break; // Poda alfa-beta
+                            break; // alpha beta
                         }
                     }
                 }
@@ -105,7 +106,7 @@ public class Agente extends Jugador {
                         mejorValor = Math.min(mejorValor, valor);
                         beta = Math.min(beta, mejorValor);
                         if (beta <= alpha) {
-                            break; // Poda alfa-beta
+                            break; // alpha beta
                         }
                     }
                 }
