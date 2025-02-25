@@ -41,7 +41,7 @@ public class Agente extends Jugador {
                     }
                 }
                 if (contadorOponente == 2 && contadorVacio == 1) {
-                    tablero.colocarFicha(i, columnaVacio, ficha);
+                    tablero.colocarFicha(columnaVacio, i, ficha);
                     System.out.println("Agente bloquea en (" + i + ", " + columnaVacio + ") horizontal");
                     return;
                 }
@@ -63,7 +63,7 @@ public class Agente extends Jugador {
                     }
                 }
                 if (contadorOponente == 2 && contadorVacio == 1) {
-                    tablero.colocarFicha(filaVacia, j, ficha);
+                    tablero.colocarFicha(j, filaVacia, ficha);
                     System.out.println("Agente bloquea en (" + filaVacia + ", " + j + ") vertical");
                     return;
                 }
@@ -87,7 +87,7 @@ public class Agente extends Jugador {
                     }
                 }
                 if (contadorOponente == 2 && contadorVacio == 1) {
-                    tablero.colocarFicha(filaVacia, columnaVacia, ficha);
+                    tablero.colocarFicha(columnaVacia, filaVacia, ficha);
                     System.out.println("Agente bloquea en (" + filaVacia + ", " + columnaVacia + ") diagonal");
                     return;
                 }
@@ -111,7 +111,7 @@ public class Agente extends Jugador {
                     }
                 }
                 if (contadorOponente == 2 && contadorVacio == 1) {
-                    tablero.colocarFicha(filaVacia, columnaVacia, ficha);
+                    tablero.colocarFicha(columnaVacia, filaVacia, ficha);
                     System.out.println("Agente bloquea en (" + filaVacia + ", " + columnaVacia + ") diagonal inversa");
                     return;
                 }

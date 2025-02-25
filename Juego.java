@@ -54,7 +54,7 @@ public class Juego {
 
     private static void determinaTurnos(Jugador[] jugadores) {
         Random random = new Random(); 
-        int turno = random.nextInt(1);
+        int turno = random.nextInt(2);
 
         if (turno == 1) {
             jugadores[0] = new Jugador('o');
