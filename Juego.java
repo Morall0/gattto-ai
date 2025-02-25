@@ -22,15 +22,20 @@ public class Juego {
             System.out.println("Turno de jugador "+ (turno+1));
 
             boolean casilla_valida;
-            do {
-                System.out.print("\nTirar en (fila,columna): ");
-                coords = scanCoords(scanner);
-                casilla_valida = jugadores[turno].tirar(tablero, coords[0], coords[1]);
 
-                if (casilla_valida == false)
-                    System.out.println("Casilla inválida, elige otra casilla.");
+            if (jugadores[turno] instanceof Agente) { //Si es agente se tira con base en sus algoritmos
+                ((Agente) jugadores[turno]).jugar(tablero);
+            } else { //Si es usuario se le pide la casilla
+                do {
+                    System.out.print("\nTirar en (fila,columna): ");
+                    coords = scanCoords(scanner);
+                    casilla_valida = jugadores[turno].tirar(tablero, coords[0], coords[1]);
 
-            } while (casilla_valida == false); 
+                    if (casilla_valida == false)
+                        System.out.println("Casilla inválida, elige otra casilla.");
+
+                } while (casilla_valida == false); 
+            }
 
             turno = (turno + 1) % 2; //Va cambiando el turno (indice) de forma ciclica.
         } while (continuaJuego(tablero, jugadores));

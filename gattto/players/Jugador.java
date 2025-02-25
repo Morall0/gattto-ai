@@ -3,7 +3,7 @@ package gattto.players;
 import gattto.Tablero;
 
 public class Jugador {
-    private char ficha;
+    protected char ficha;
     
     public Jugador (char ficha) {
         this.ficha = ficha;

@@ -1,5 +1,4 @@
 package gattto.players;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,14 +7,12 @@ import gattto.Tablero;
 
 public class Agente extends Jugador {
 
-    private char ficha;            
     private char fichaContraria;   
     private Random random;
 
     public Agente(char ficha) {
         super(ficha);
-        this.ficha = ficha;
-        this.fichaContraria = (ficha == 'X') ? 'O' : 'X';
+        this.fichaContraria = (ficha == 'x') ? 'o' : 'x';
         this.random = new Random();
     }   
    
@@ -132,8 +129,8 @@ public class Agente extends Jugador {
         }
 
         if (!casillasVacias.isEmpty()) {
-            int[] jugada = casillasVacias.get(random.nextInt(casillasVacias.size()));
-            tablero.colocarFicha(jugada[0], jugada[1], ficha);
+            int[] jugada = casillasVacias.remove(random.nextInt(casillasVacias.size()));
+            tablero.colocarFicha(jugada[1], jugada[0], ficha);
             System.out.println("Agente juega aleatoriamente en (" + jugada[0] + ", " + jugada[1] + ")");
         }
     }
