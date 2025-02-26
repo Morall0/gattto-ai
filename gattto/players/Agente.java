@@ -118,7 +118,102 @@ public class Agente extends Jugador {
             }
         }
 
-        // 2. Si no hay jugada peligrosa, el agente juega de forma aleatoria
+        //2. Si hay dos seguidas, completar la línea
+        // Completar horizontal
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j <= size - 3; j++) {
+                int contadorFicha = 0;
+                int contadorVacio = 0;
+                int columnaVacio = -1;
+                for (int k = 0; k < 3; k++) {
+                    if (board[i][j + k] == ficha) {
+                        contadorFicha++;
+                    } else if (board[i][j + k] == ' ') {
+                        contadorVacio++;
+                        columnaVacio = j + k;
+                    }
+                }
+                if (contadorFicha == 2 && contadorVacio == 1) {
+                    tablero.colocarFicha(columnaVacio, i, ficha);
+                    System.out.println("Agente completa en (" + i + ", " + columnaVacio + ") horizontal");
+                    return;
+                }
+            }
+        }
+
+        // Completar vertical
+        for (int j = 0; j < size; j++) {
+            for (int i = 0; i <= size - 3; i++) {
+                int contadorFicha = 0;
+                int contadorVacio = 0;
+                int filaVacia = -1;
+                for (int k = 0; k < 3; k++) {
+                    if (board[i + k][j] == ficha) {
+                        contadorFicha++;
+                    } else if (board[i + k][j] == ' ') {
+                        contadorVacio++;
+                        filaVacia = i + k;
+                    }
+                }
+                if (contadorFicha == 2 && contadorVacio == 1) {
+                    tablero.colocarFicha(j, filaVacia, ficha);
+                    System.out.println("Agente completa en (" + filaVacia + ", " + j + ") vertical");
+                    return;
+                }
+            }
+        }
+
+        // Completar diagonal (de izquierda a derecha)
+        for (int i = 0; i <= size - 3; i++) {
+            for (int j = 0; j <= size - 3; j++) {
+                int contadorFicha = 0;
+                int contadorVacio = 0;
+                int filaVacia = -1;
+                int columnaVacia = -1;
+                for (int k = 0; k < 3; k++) {
+                    if (board[i + k][j + k] == ficha) {
+                        contadorFicha++;
+                    } else if (board[i + k][j + k] == ' ') {
+                        contadorVacio++;
+                        filaVacia = i + k;
+                        columnaVacia = j + k;
+                    }
+                }
+                if (contadorFicha == 2 && contadorVacio == 1) {
+                    tablero.colocarFicha(columnaVacia, filaVacia, ficha);
+                    System.out.println("Agente completa en (" + filaVacia + ", " + columnaVacia + ") diagonal");
+                    return;
+                }
+            }
+        }
+
+        // Completar diagonal inversa (de derecha a izquierda)
+        for (int i = 0; i <= size - 3; i++) {
+            for (int j = 2; j < size; j++) {
+                int contadorFicha = 0;
+                int contadorVacio = 0;
+                int filaVacia = -1;
+                int columnaVacia = -1;
+                for (int k = 0; k < 3; k++) {
+                    if (board[i + k][j - k] == ficha) {
+                        contadorFicha++;
+                    } else if (board[i + k][j - k] == ' ') {
+                        contadorVacio++;
+                        filaVacia = i + k;
+                        columnaVacia = j - k;
+                    }
+                }
+                if (contadorFicha == 2 && contadorVacio == 1) {
+                    tablero.colocarFicha(columnaVacia, filaVacia, ficha);
+                    System.out.println("Agente completa en (" + filaVacia + ", " + columnaVacia + ") diagonal inversa");
+                    return;
+                }
+            }
+        }
+    
+
+
+        // 3. Si no hay jugada peligrosa, el agente juega de forma aleatoria
         List<int[]> casillasVacias = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {

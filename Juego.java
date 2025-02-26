@@ -1,55 +1,75 @@
-import java.util.Random;
-import java.util.Scanner;
-
 import gattto.Tablero;
-import gattto.players.*;
+import gattto.players.Agente;
+import gattto.players.Jugador;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class Juego {
+    private JFrame frame;
+    private JButton[][] buttons;
+    private Tablero tablero;
+    private Jugador[] jugadores;
+    private int turno;
+    private int size;
 
+    public Juego() {
+        tablero = new Tablero();
+        jugadores = new Jugador[2];
+        size = tablero.getSize();
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        frame = new JFrame("Tic-tac-toe");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 400);
+        frame.setLayout(new GridLayout(size, size));
 
-        Tablero tablero = new Tablero();
-        Jugador[] jugadores = new Jugador[2];
-        int turno=0;
-        int[] coords = new int[2];
+        buttons = new JButton[size][size];
 
         determinaTurnos(jugadores);
 
-        do { //Permite jugar hasta que se llene o haya un ganador
-            tablero.mostrarTablero();
-            System.out.println("Turno de jugador "+ (turno+1));
-
-            boolean casilla_valida;
-
-            if (jugadores[turno] instanceof Agente) { //Si es agente se tira con base en sus algoritmos
-                ((Agente) jugadores[turno]).jugar(tablero);
-            } else { //Si es usuario se le pide la casilla
-                do {
-                    System.out.print("\nTirar en (fila,columna): ");
-                    coords = scanCoords(scanner);
-                    casilla_valida = jugadores[turno].tirar(tablero, coords[0], coords[1]);
-
-                    if (casilla_valida == false)
-                        System.out.println("Casilla inválida, elige otra casilla.");
-
-                } while (casilla_valida == false); 
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                buttons[i][j] = new JButton(" ");
+                buttons[i][j].setFont(new Font("Arial", Font.BOLD, 40));
+                final int row = i, col = j;
+                buttons[i][j].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        realizarJugada(row, col);
+                    }
+                });
+                frame.add(buttons[i][j]);
             }
+        }
+        frame.setVisible(true);
 
-            turno = (turno + 1) % 2; //Va cambiando el turno (indice) de forma ciclica.
-        } while (continuaJuego(tablero, jugadores));
+        if (jugadores[turno] instanceof Agente) {
+            ((Agente) jugadores[turno]).jugar(tablero);
+            actualizarTablero();
+            turno = (turno + 1) % 2;
+        }
+    }
 
-        tablero.mostrarTablero();
-        if (tablero.hayGanador(jugadores[0].getFicha()))
-            System.out.println("Gana el jugador 1");
-        else if (tablero.hayGanador(jugadores[1].getFicha()))
-            System.out.println("Gana el jugador 2");
-        else
-            System.out.println("Empate");
+    private void realizarJugada(int fila, int columna) {
+        if (tablero.colocarFicha(columna, fila, jugadores[turno].getFicha())) {
+            buttons[fila][columna].setText(String.valueOf(jugadores[turno].getFicha()));
 
+            if (verificarFinDelJuego()) return; // Si el juego terminó, salimos
 
-        scanner.close();
+            turno = (turno + 1) % 2;
+
+            if (jugadores[turno] instanceof Agente) {
+                ((Agente) jugadores[turno]).jugar(tablero);
+                actualizarTablero();
+
+                if (verificarFinDelJuego()) return; // Verificamos si la IA terminó el juego
+
+                turno = (turno + 1) % 2;
+            }
+        }
     }
 
     private static void determinaTurnos(Jugador[] jugadores) {
@@ -67,17 +87,36 @@ public class Juego {
         }
     }
 
-    private static boolean continuaJuego(Tablero tablero, Jugador[] jugadores) {
-        return !tablero.tableroLleno() && !( 
-               tablero.hayGanador(jugadores[0].getFicha()) || 
-               tablero.hayGanador(jugadores[1].getFicha()));
+    private boolean verificarFinDelJuego() {
+        if (tablero.hayGanador(jugadores[0].getFicha())) {
+            mostrarMensaje("¡Gana el jugador 1!");
+            return true;
+        } else if (tablero.hayGanador(jugadores[1].getFicha())) {
+            mostrarMensaje("¡Gana el jugador 2!");
+            return true;
+        } else if (tablero.tableroLleno()) {
+            mostrarMensaje("¡Empate!");
+            return true;
+        }
+        return false;
+    }
+    
+    private void actualizarTablero() {
+        char[][] board = tablero.getTablero();
+        for (int i = 0; i < tablero.getSize(); i++) {
+            for (int j = 0; j < tablero.getSize(); j++) {
+                buttons[i][j].setText(String.valueOf(board[i][j]));
+            }
+        }
     }
 
-    private static int[] scanCoords(Scanner scanner) {
-        String string_coords = scanner.nextLine();
-        String[] splitted = string_coords.split(",");
-
-        return new int[]{Integer.parseInt(splitted[0]), Integer.parseInt(splitted[1])}; //Retorna un int[2] con {fila,columna}
+    private void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(frame, mensaje);
+        frame.dispose();
     }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(Juego::new);
+    }
 }
+
