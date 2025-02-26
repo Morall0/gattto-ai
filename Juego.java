@@ -29,7 +29,7 @@ public class Juego {
                 do {
                     System.out.print("\nTirar en (fila,columna): ");
                     coords = scanCoords(scanner);
-                    casilla_valida = jugadores[turno].tirar(tablero, coords[0], coords[1]);
+                    casilla_valida = jugadores[turno].tirar(tablero, coords[0]-1, coords[1]-1);
 
                     if (casilla_valida == false)
                         System.out.println("Casilla inválida, elige otra casilla.");

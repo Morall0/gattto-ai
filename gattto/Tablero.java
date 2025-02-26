@@ -8,7 +8,7 @@ public class Tablero {
     private char[][] tablero;
 
     //Aqui se modifica el tamaño del tablero
-    private final int size = 3;
+    private final int size = 4;
 
     public Tablero() {
         tablero = new char[size][size];
