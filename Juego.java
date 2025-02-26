@@ -1,4 +1,3 @@
-
 import gattto.Tablero;
 import gattto.players.Agente;
 import gattto.players.Jugador;
@@ -48,7 +47,7 @@ public class Juego {
         frame.setVisible(true);
 
         if (jugadores[turno] instanceof Agente) {
-            ((Agente) jugadores[turno]).jugar(tablero, turno);
+            ((Agente) jugadores[turno]).jugar(tablero);
             actualizarTablero();
             turno = (turno + 1) % 2;
         }
@@ -63,7 +62,7 @@ public class Juego {
             turno = (turno + 1) % 2;
 
             if (jugadores[turno] instanceof Agente) {
-                ((Agente) jugadores[turno]).jugar(tablero, turno);
+                ((Agente) jugadores[turno]).jugar(tablero);
                 actualizarTablero();
 
                 if (verificarFinDelJuego()) return; // Verificamos si la IA terminó el juego

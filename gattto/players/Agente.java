@@ -14,7 +14,7 @@ public class Agente extends Jugador {
         this.cache = new HashMap<>();
     }
 
-    public void jugar(Tablero tablero, int turno) {
+    public void jugar(Tablero tablero) {
         char[][] board = tablero.getTablero();
         int size = board.length;
         boolean vacio = true;
